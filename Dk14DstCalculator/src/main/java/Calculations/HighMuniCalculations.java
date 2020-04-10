@@ -13,7 +13,6 @@ public class HighMuniCalculations extends Calculations {
         double previshenieMuni = frame.getCurrentMuni() - PERFECT_MUNI_LVL;
         /*
         Превышение/усадку от 1% и * на массу 1% т.е. кол-во % необходимых для нормализации Муни на массу в тоннах умножаем
-        Так?
          */
         double prosadka = (frame.getMuniBatarei() - frame.getFactMuni())/frame.getMaslo();
         System.out.println("От 1% масла Муни уменьшится на " + prosadka);
@@ -46,17 +45,17 @@ public class HighMuniCalculations extends Calculations {
      *
      * @param currentV текущий объем в-ва в усреднителе
      * @param suhoyOstatok Сухой остаток
-     * @param ro плотность. Примерно 0,77. Можно ли забить её в константы?
+     * @param ro плотность. Примерно 0,776. Можно ли забить её в константы?
      * @return масса масла в 1 проценте
      */
     public static double makeMuniLowerMassInOnePercent(double currentV, double suhoyOstatok, double ro){
         //текущий объём в емкости
-        return (currentV * suhoyOstatok * ro) / 100 ;//Тонн в 1% ?
+        return (currentV * suhoyOstatok * ro) / 10 ;
     }
 
     /**
      *
-     * @param muniFact Что будет с фактическим Муни?
+     * @param muniFact Текущий Муни в усреднителе
      * @param muniSBatarei Муни батареи
      * @param averageHourlyDozaMasla средне часовая доза масла
      * @return усадка Муни при добавлении 1% масла

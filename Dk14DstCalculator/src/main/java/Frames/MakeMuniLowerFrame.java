@@ -1,6 +1,8 @@
 package Frames;
 
 import Calculations.HighMuniCalculations;
+import Db.DbOperations;
+import Db.Record;
 import excelOperations.FixMuniWorkbook;
 import excelOperations.WorkbookFixMuniOperations;
 
@@ -8,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class MakeMuniLowerFrame extends JFrame {
     private JTextField currentLField, suhoyOstatokField, roField, muniBatareiField, masloField;
@@ -99,11 +102,15 @@ public class MakeMuniLowerFrame extends JFrame {
                 currentL =  Double.parseDouble(currentLField.getText().replace(',', '.'));
                 suhoyOstatok = Double.parseDouble(suhoyOstatokField.getText().replace(',', '.'));
                 ro = Double.parseDouble(roField.getText().replace(',', '.'));
-                addMaslo = new HighMuniCalculations().calculate(getFrameState()) * 10;
+                //addMaslo = new HighMuniCalculations().calculate(getFrameState()) * 10;
+                addMaslo = new HighMuniCalculations().calculate(getFrameState());
                 resultLabel.setText("Добавить " + String.format("%.2f", addMaslo) + "кг масла");
                 newMasloLabel.setText("Новый уровень масла: " + String.format("%.2f", newMaslo));
                 newMuniLabel.setText("Новый Муни: " + String.format("%.2f", newMuni));
-            }catch (NumberFormatException el){
+
+                DbOperations.insert(DbOperations.getConnection(), new Record((float)currentMuni, (float)newMuni, (float)muniBatarei, (float)maslo, (float)newMaslo,
+                        (float)ro, (float)suhoyOstatok, (float)addMaslo, -1));
+            }catch (NumberFormatException | SQLException el){
                 el.printStackTrace();
                }
 

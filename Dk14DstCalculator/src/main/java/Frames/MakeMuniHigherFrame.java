@@ -1,6 +1,8 @@
 package Frames;
 
 import Calculations.LowMuniCalculations;
+import Db.DbOperations;
+import Db.Record;
 import excelOperations.FixMuniWorkbook;
 import excelOperations.WorkbookFixMuniOperations;
 
@@ -8,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class MakeMuniHigherFrame extends JFrame {
 
@@ -96,6 +99,12 @@ public class MakeMuniHigherFrame extends JFrame {
             polimerLabel.setText(String.valueOf(polimer));
             newMasloLabel.setText("Новый уровень масла: " + String.format("%.2f", newMaslo));
             newMuniLabel.setText("Новый Муни: " + String.format("%.2f", newMuni));
+            try {
+                DbOperations.insert(DbOperations.getConnection(), new Record((float)currentMuni, (float)newMuni, (float)muniBatarei, (float)maslo, (float)newMaslo,
+                        -1, -1, -1, (float)polimer));
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 

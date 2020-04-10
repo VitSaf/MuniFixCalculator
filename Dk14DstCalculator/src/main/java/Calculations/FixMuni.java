@@ -169,7 +169,7 @@ public class FixMuni {
             newMuni = (x + y) / (frame.getCurrentL() + polimer);
             System.out.println("Новый Муни при " + polimer + "% полимера: " + newMuni);
             polimer += 0.5;
-            if(polimer > polimerMax) {//Что за хуету я сотворил?
+            if(polimer > polimerMax) {
                 polimer = polimerMax;
                 y = frame.getMuniBatarei() * polimer;
                 frame.setPolimer(polimer);
@@ -179,8 +179,6 @@ public class FixMuni {
             }
         }
         System.out.println("Добавляется полимера % = " + polimer);
-
-
 
         frame.setPolimer(polimer);
         frame.setNewMuni(newMuni);
