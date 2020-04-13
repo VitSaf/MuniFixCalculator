@@ -29,8 +29,8 @@ public class DbOperations {
 
     //public static boolean insert(Connection con ,float muniWas, float muniNow, float muniBatarei, float masloWas, float masloNow, float ro, float suhoyOstatok, float addMaslo, float addPolimer) throws SQLException {
     public static boolean insert(Connection con, Record r) throws SQLException{
-        PreparedStatement pstmt = con.prepareStatement("insert into DSSK_Logging (muni_was, muni_now, muni_batarei, maslo_was, maslo_now, ro, suhoy_ostatok, add_maslo, add_polimer) " +
-                "                                           values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement pstmt = con.prepareStatement("insert into DSSK_Logging (muni_was, muni_now, muni_batarei, maslo_was, maslo_now, ro, suhoy_ostatok, add_maslo, add_polimer, usr_N) " +
+                "                                           values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         pstmt.setFloat(1, r.getMuniWas());
         pstmt.setFloat(2, r.getMuniNow());
         pstmt.setFloat(3, r.getMuniBatarei());
@@ -40,6 +40,7 @@ public class DbOperations {
         pstmt.setFloat(7, r.getSuhoyOstatok());
         pstmt.setFloat(8, r.getAddMaslo());
         pstmt.setFloat(9, r.getAddPolimer());
+        pstmt.setString(10, r.getUsrN());
         return pstmt.execute();
     }
 
@@ -47,10 +48,13 @@ public class DbOperations {
         Statement stmt = con.createStatement();
         ResultSet set = stmt.executeQuery("SELECT * FROM DSSK_Logging");
         Record[] records = new Record[DbOperations.getCountOfRowsInDb(con)];
-        for(int i = 0; i < records.length; i++)
+        //for(int i = 0; i < records.length; i++)
+        int i = 0;
+        while (set.next()) {
             records[i] = new Record(set.getInt("id"), set.getString("date"), set.getFloat("muni_was"), set.getFloat("muni_now"), set.getFloat("muni_batarei"), set.getFloat("maslo_was"),
-                    set.getFloat("maslo_now"), set.getFloat("ro"), set.getFloat("suhoy_ostatok"), set.getFloat("add_maslo"), set.getFloat("add_polimer"));
-
+                    set.getFloat("maslo_now"), set.getFloat("ro"), set.getFloat("suhoy_ostatok"), set.getFloat("add_maslo"), set.getFloat("add_polimer"), set.getString("usr_N"));
+            i++;
+        }
         return records;
     }
 

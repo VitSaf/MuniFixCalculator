@@ -50,6 +50,9 @@ public class FixMuniWorkbook extends WorkbookOperations {
 
                     cell = row.createCell(9);
                     cell.setCellValue(frame.getNewMaslo());
+
+                    cell = row.createCell(10);
+                    cell.setCellValue(frame.getUsrNField().getText());
                 }
                 break;
                 case "class Frames.MakeMuniLowerFrame" :{
@@ -84,6 +87,9 @@ public class FixMuniWorkbook extends WorkbookOperations {
 
                     cell = row.createCell(9);
                     cell.setCellValue(frame.getNewMaslo());
+
+                    cell = row.createCell(10);
+                    cell.setCellValue(frame.getUsrNField().getText());
                 }
                 break;
             }

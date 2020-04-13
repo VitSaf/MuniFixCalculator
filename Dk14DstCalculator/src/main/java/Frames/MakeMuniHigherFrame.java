@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 public class MakeMuniHigherFrame extends JFrame {
 
-    private JTextField currentLField, currentMuniField, muniBatareiField, masloField;
+    private JTextField currentLField, currentMuniField, muniBatareiField, masloField, usrNField;
     private JLabel resultLabel, newMuniLabel, newMasloLabel, polimerLabel;
     private double currentMuni, result, currentL, polimer, muniBatarei, maslo ,newMuni, newMaslo;
 
@@ -29,7 +29,7 @@ public class MakeMuniHigherFrame extends JFrame {
         this.currentMuni = currentMuni;
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 5));
+        panel.setLayout(new GridLayout(3, 6));
 
         currentLField = new JTextField("", 4);
         currentMuniField = new JTextField(String.valueOf(currentMuni), 4);
@@ -38,6 +38,7 @@ public class MakeMuniHigherFrame extends JFrame {
         masloField = new JTextField("", 4);
         newMuniLabel = new JLabel("");
         newMasloLabel = new JLabel("");
+        usrNField = new JTextField("", 20);
 
         resultLabel = new JLabel("");
 
@@ -67,11 +68,13 @@ public class MakeMuniHigherFrame extends JFrame {
         panel.add(new JLabel("Добавляемое количество полимера, %"));
         panel.add(new JLabel("Текущий Муни, у.е."));
         panel.add(new JLabel("Масло, %"));
+        panel.add(new JLabel("№ усреднителя"));
         panel.add(currentLField);
         panel.add(muniBatareiField);
         panel.add(polimerLabel);
         panel.add(currentMuniField);
         panel.add(masloField);
+        panel.add(usrNField);
 
 
         panel.add(newMuniLabel);
@@ -79,6 +82,7 @@ public class MakeMuniHigherFrame extends JFrame {
         panel.add(fixMuniButton);
         panel.add(saveToExcel);
         panel.add(backButton);
+        panel.add(new JLabel(""));
 
 
         setContentPane(panel);
@@ -101,7 +105,7 @@ public class MakeMuniHigherFrame extends JFrame {
             newMuniLabel.setText("Новый Муни: " + String.format("%.2f", newMuni));
             try {
                 DbOperations.insert(DbOperations.getConnection(), new Record((float)currentMuni, (float)newMuni, (float)muniBatarei, (float)maslo, (float)newMaslo,
-                        -1, -1, -1, (float)polimer));
+                        -1, -1, -1, (float)polimer, usrNField.getText()));
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -179,4 +183,11 @@ public class MakeMuniHigherFrame extends JFrame {
         this.newMaslo = newMaslo;
     }
 
-   }
+    public JTextField getUsrNField() {
+        return usrNField;
+    }
+
+    public void setUsrNField(JTextField usrNField) {
+        this.usrNField = usrNField;
+    }
+}

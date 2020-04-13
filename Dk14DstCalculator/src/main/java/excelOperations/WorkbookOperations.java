@@ -55,6 +55,9 @@ public abstract class WorkbookOperations {
             cell = row.createCell(9);
             cell.setCellValue("Новый уровень масла, %");
 
+            cell = row.createCell(10);
+            cell.setCellValue("№ усреднителя");
+
             try {
                 wb.write(new FileOutputStream(WORKBOOK));
                 wb.close();

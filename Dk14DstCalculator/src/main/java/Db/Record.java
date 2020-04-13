@@ -1,6 +1,5 @@
 package Db;
 
-import java.sql.Timestamp;
 
 public class Record {
     private int id;
@@ -14,8 +13,9 @@ public class Record {
     private float suhoyOstatok;
     private float addMaslo;
     private float addPolimer;
+    private String usrN;
 
-    public Record(int id, String date, float muniWas, float muniNow, float muniBatarei, float masloWas, float masloNow, float ro, float suhoyOstatok, float addMaslo, float addPolimer) {
+    public Record(int id, String date, float muniWas, float muniNow, float muniBatarei, float masloWas, float masloNow, float ro, float suhoyOstatok, float addMaslo, float addPolimer, String usrN) {
         this.id = id;
         this.date = date;
         this.muniWas = muniWas;
@@ -27,9 +27,10 @@ public class Record {
         this.suhoyOstatok = suhoyOstatok;
         this.addMaslo = addMaslo;
         this.addPolimer = addPolimer;
+        this.usrN = usrN;
     }
 
-    public Record(float muniWas, float muniNow, float muniBatarei, float masloWas, float masloNow, float ro, float suhoyOstatok, float addMaslo, float addPolimer) {
+    public Record(float muniWas, float muniNow, float muniBatarei, float masloWas, float masloNow, float ro, float suhoyOstatok, float addMaslo, float addPolimer, String usrN) {
         this.muniWas = muniWas;
         this.muniNow = muniNow;
         this.muniBatarei = muniBatarei;
@@ -39,6 +40,15 @@ public class Record {
         this.suhoyOstatok = suhoyOstatok;
         this.addMaslo = addMaslo;
         this.addPolimer = addPolimer;
+        this.usrN = usrN;
+    }
+
+    public String getUsrN() {
+        return usrN;
+    }
+
+    public void setUsrN(String usrN) {
+        this.usrN = usrN;
     }
 
     @Override
@@ -55,8 +65,8 @@ public class Record {
                 ", suhoyOstatok=" + suhoyOstatok +
                 ", addMaslo=" + addMaslo +
                 ", addPolimer=" + addPolimer +
-                '}' +
-                System.lineSeparator();
+                ", usrN='" + usrN + '\'' +
+                '}' + System.lineSeparator();
     }
 
     public int getId() {

@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 public class MakeMuniLowerFrame extends JFrame {
-    private JTextField currentLField, suhoyOstatokField, roField, muniBatareiField, masloField;
+    private JTextField currentLField, suhoyOstatokField, roField, muniBatareiField, masloField, usrNField;
     private JLabel resultLabel, newMuniLabel, newMasloLabel, currentMuniLabel;
     private double currentMuni, currentL, suhoyOstatok, ro, muniBatarei, factMuni, maslo, addMaslo, newMuni, newMaslo;
 
@@ -28,7 +28,7 @@ public class MakeMuniLowerFrame extends JFrame {
         this.currentMuni = currentMuni;
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 6));
+        panel.setLayout(new GridLayout(3, 7));
 
         currentLField = new JTextField("", 4);
         suhoyOstatokField = new JTextField("", 4);
@@ -36,11 +36,11 @@ public class MakeMuniLowerFrame extends JFrame {
         muniBatareiField = new JTextField("", 4);
         currentMuniLabel = new JLabel(String.valueOf(currentMuni));
         masloField = new JTextField("", 4);
+        usrNField = new JTextField("", 20);
 
         resultLabel = new JLabel("");
         newMuniLabel = new JLabel("");
         newMasloLabel = new JLabel("");
-
 
         JButton fixMuniButton = new JButton("Расчитать");
         fixMuniButton.addActionListener(new FixMuniButton());
@@ -69,6 +69,7 @@ public class MakeMuniLowerFrame extends JFrame {
         panel.add(new JLabel("Муни в батарее, у.е."));
         panel.add(new JLabel("Текущий Муни, у.е."));//уточнить!!!
         panel.add(new JLabel("Масло, %"));
+        panel.add(new JLabel("№ усреднителя"));
         //panel.add(new JLabel(""));
         panel.add(currentLField);
         panel.add(suhoyOstatokField);
@@ -76,6 +77,7 @@ public class MakeMuniLowerFrame extends JFrame {
         panel.add(muniBatareiField);
         panel.add(currentMuniLabel);
         panel.add(masloField);
+        panel.add(usrNField);
 
         //panel.add(new JLabel("Добавить "));
         panel.add(resultLabel);
@@ -109,7 +111,7 @@ public class MakeMuniLowerFrame extends JFrame {
                 newMuniLabel.setText("Новый Муни: " + String.format("%.2f", newMuni));
 
                 DbOperations.insert(DbOperations.getConnection(), new Record((float)currentMuni, (float)newMuni, (float)muniBatarei, (float)maslo, (float)newMaslo,
-                        (float)ro, (float)suhoyOstatok, (float)addMaslo, -1));
+                        (float)ro, (float)suhoyOstatok, (float)addMaslo, -1, usrNField.getText()));
             }catch (NumberFormatException | SQLException el){
                 el.printStackTrace();
                }
@@ -203,5 +205,13 @@ public class MakeMuniLowerFrame extends JFrame {
 
     public void setNewMaslo(double newMaslo) {
         this.newMaslo = newMaslo;
+    }
+
+    public JTextField getUsrNField() {
+        return usrNField;
+    }
+
+    public void setUsrNField(JTextField usrNField) {
+        this.usrNField = usrNField;
     }
 }
