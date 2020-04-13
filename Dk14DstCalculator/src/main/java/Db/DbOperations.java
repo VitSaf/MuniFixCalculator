@@ -4,7 +4,8 @@ import java.sql.*;
 
 public class DbOperations {
 
-    private static final String DB_PATH = "C:\\Users\\bobca\\OneDrive\\Документы\\ПЭК.ПИ\\IdeaProjects\\Dk14DstCalculator\\DSSK_DB.s3db";
+    //private static final String DB_PATH = "C:\\Users\\bobca\\OneDrive\\Документы\\ПЭК.ПИ\\IdeaProjects\\Dk14DstCalculator\\DSSK_DB.s3db";
+    private static final String DB_PATH = "DSSK_DB.s3db";
 
     public static void tryDbConnection(String pathToDb){
         String url = "jdbc:sqlite:" + pathToDb;
@@ -47,7 +48,7 @@ public class DbOperations {
         ResultSet set = stmt.executeQuery("SELECT * FROM DSSK_Logging");
         Record[] records = new Record[DbOperations.getCountOfRowsInDb(con)];
         for(int i = 0; i < records.length; i++)
-            records[i] = new Record(set.getInt("id"), set.getString("date"), set.getFloat("muni_was"), set.getFloat("muni_now"), set.getFloat("muni_batarei"), set.getFloat(" maslo_was"),
+            records[i] = new Record(set.getInt("id"), set.getString("date"), set.getFloat("muni_was"), set.getFloat("muni_now"), set.getFloat("muni_batarei"), set.getFloat("maslo_was"),
                     set.getFloat("maslo_now"), set.getFloat("ro"), set.getFloat("suhoy_ostatok"), set.getFloat("add_maslo"), set.getFloat("add_polimer"));
 
         return records;
@@ -58,12 +59,12 @@ public class DbOperations {
         return stmt.executeQuery("SELECT COUNT(*) FROM DSSK_Logging").getInt(1);
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         tryDbConnection(DB_PATH);
         try {
             System.out.println(getCountOfRowsInDb(getConnection()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

@@ -1,9 +1,13 @@
 package Frames;
 
+import Db.DbOperations;
+import Mail.CreateMsg;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 /**
  * Главное меню
@@ -38,6 +42,19 @@ public class MainFrame extends JFrame{
             }
         });
 
+        JButton logButton = new JButton("Создать письмо с логами");
+        logButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    CreateMsg.createLogsMsg(DbOperations.selectAll(DbOperations.getConnection()));
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    ex.printStackTrace();
+                }
+            }
+        });
+
 
 
         JPanel panel = new JPanel();
@@ -50,7 +67,8 @@ public class MainFrame extends JFrame{
         panel.add(button2);
 
         //panel.add(helpButton);
-        smallPanel.add(new JLabel(""));
+        //smallPanel.add(new JLabel(""));
+        smallPanel.add(logButton);
         smallPanel.add(helpButton);
         panel.add(smallPanel);
 

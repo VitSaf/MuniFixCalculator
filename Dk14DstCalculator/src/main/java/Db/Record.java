@@ -41,6 +41,24 @@ public class Record {
         this.addPolimer = addPolimer;
     }
 
+    @Override
+    public String toString() {
+        return "Record{" +
+                "id=" + id +
+                ", date='" + date + '\'' +
+                ", muniWas=" + muniWas +
+                ", muniNow=" + muniNow +
+                ", muniBatarei=" + muniBatarei +
+                ", masloWas=" + masloWas +
+                ", masloNow=" + masloNow +
+                ", ro=" + ro +
+                ", suhoyOstatok=" + suhoyOstatok +
+                ", addMaslo=" + addMaslo +
+                ", addPolimer=" + addPolimer +
+                '}' +
+                System.lineSeparator();
+    }
+
     public int getId() {
         return id;
     }
