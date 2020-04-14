@@ -66,9 +66,9 @@ public class MakeMuniLowerFrame extends JFrame {
         panel.add(new JLabel("Текущий уровень в усреднителе, %"));
         panel.add(new JLabel("Сухой остаток, %"));
         panel.add(new JLabel("Плотность, кг/м³"));
-        panel.add(new JLabel("Муни в батарее, у.е."));
+        panel.add(new JLabel("Муни с 5 батареи, у.е."));
         panel.add(new JLabel("Текущий Муни, у.е."));//уточнить!!!
-        panel.add(new JLabel("Масло, %"));
+        panel.add(new JLabel("Доз. масла, %"));
         panel.add(new JLabel("№ усреднителя"));
         //panel.add(new JLabel(""));
         panel.add(currentLField);
@@ -97,6 +97,7 @@ public class MakeMuniLowerFrame extends JFrame {
     public class FixMuniButton implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if(usrNField.getText().length() < 1){ JOptionPane.showMessageDialog(null, "Введите № усреднителя"); return;}
             try {
                 factMuni = Double.parseDouble(currentMuniLabel.getText().replace(',', '.'));
                 muniBatarei =  Double.parseDouble(muniBatareiField.getText().replace(',', '.'));
@@ -107,15 +108,14 @@ public class MakeMuniLowerFrame extends JFrame {
                 //addMaslo = new HighMuniCalculations().calculate(getFrameState()) * 10;
                 addMaslo = new HighMuniCalculations().calculate(getFrameState());
                 resultLabel.setText("Добавить " + String.format("%.2f", addMaslo) + "кг масла");
-                newMasloLabel.setText("Новый уровень масла: " + String.format("%.2f", newMaslo));
-                newMuniLabel.setText("Новый Муни: " + String.format("%.2f", newMuni));
+                newMasloLabel.setText("Расчетное маслонаполнение: " + String.format("%.2f", newMaslo));
+                newMuniLabel.setText("Расчетное Муни: " + String.format("%.2f", newMuni));
 
                 DbOperations.insert(DbOperations.getConnection(), new Record((float)currentMuni, (float)newMuni, (float)muniBatarei, (float)maslo, (float)newMaslo,
                         (float)ro, (float)suhoyOstatok, (float)addMaslo, -1, usrNField.getText()));
             }catch (NumberFormatException | SQLException el){
                 el.printStackTrace();
                }
-
         }
     }
 

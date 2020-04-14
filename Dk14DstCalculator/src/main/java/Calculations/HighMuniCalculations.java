@@ -15,10 +15,11 @@ public class HighMuniCalculations extends Calculations {
         Превышение/усадку от 1% и * на массу 1% т.е. кол-во % необходимых для нормализации Муни на массу в тоннах умножаем
          */
         double prosadka = (frame.getMuniBatarei() - frame.getFactMuni())/frame.getMaslo();
-        System.out.println("От 1% масла Муни уменьшится на " + prosadka);
+        System.out.println("От 1% масла Муни уменьшится на(prosadka) " + prosadka);
         double percents = /*(int)*/(previshenieMuni/makeMuniLowerPercents(frame.getFactMuni(), frame.getMuniBatarei(), frame.getMaslo()));
         System.out.println("В одном проценте тонн масла: " +  makeMuniLowerMassInOnePercent(currentV, frame.getSuhoyOstatok(), frame.getRo()));
         System.out.println("Добавится процентов: " + percents);
+
         if(frame.getMaslo() + percents < MAX_MASLO_LVL){
             if(percents == 0 && frame.getCurrentMuni() > MAX_MUNI_LVL) percents = 1;//
             System.out.println("Нет превышения, добавляется " + percents + "% масла");

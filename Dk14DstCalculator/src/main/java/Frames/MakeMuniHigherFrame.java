@@ -64,10 +64,10 @@ public class MakeMuniHigherFrame extends JFrame {
 
 
         panel.add(new JLabel("Текущий уровень в усреднителе, %"));
-        panel.add(new JLabel("Муни в батарее, у.е."));
+        panel.add(new JLabel("Муни c 5 батареи, у.е."));
         panel.add(new JLabel("Добавляемое количество полимера, %"));
         panel.add(new JLabel("Текущий Муни, у.е."));
-        panel.add(new JLabel("Масло, %"));
+        panel.add(new JLabel("Доз. масла, %"));
         panel.add(new JLabel("№ усреднителя"));
         panel.add(currentLField);
         panel.add(muniBatareiField);
@@ -93,6 +93,7 @@ public class MakeMuniHigherFrame extends JFrame {
     public class FixMuniButton implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if(usrNField.getText().length() < 1){ JOptionPane.showMessageDialog(null, " Введите № усреднителя"); return;}
             currentL = Double.parseDouble(currentLField.getText().replace(',', '.'));
             //polimer = Double.parseDouble(polimerLabel.getText());
             muniBatarei = Double.parseDouble(muniBatareiField.getText().replace(',', '.'));
@@ -101,8 +102,8 @@ public class MakeMuniHigherFrame extends JFrame {
             result = new LowMuniCalculations().calculate(getFrameState());
             resultLabel.setText(String.valueOf(result));
             polimerLabel.setText(String.valueOf(polimer));
-            newMasloLabel.setText("Новый уровень масла: " + String.format("%.2f", newMaslo));
-            newMuniLabel.setText("Новый Муни: " + String.format("%.2f", newMuni));
+            newMasloLabel.setText("Расчетное маслонаполнение: " + String.format("%.2f", newMaslo));
+            newMuniLabel.setText("Расчетное Муни: " + String.format("%.2f", newMuni));
             try {
                 DbOperations.insert(DbOperations.getConnection(), new Record((float)currentMuni, (float)newMuni, (float)muniBatarei, (float)maslo, (float)newMaslo,
                         -1, -1, -1, (float)polimer, usrNField.getText()));
