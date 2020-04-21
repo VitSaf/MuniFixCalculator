@@ -2,6 +2,8 @@ package excelOperations;
 
 import Frames.MakeMuniHigherFrame;
 import Frames.MakeMuniLowerFrame;
+import Scenes.HighMuniScene;
+import Scenes.LowMuniScene;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -23,10 +25,12 @@ public class FixMuniWorkbook extends WorkbookOperations {
             Sheet sheet = wb.getSheet("Results");
             Row row = sheet.createRow(sheet.getPhysicalNumberOfRows());
             Cell cell;
-
+            System.out.println(o.getClass().toString());
             switch (o.getClass().toString()){
-                case "class Frames.MakeMuniHigherFrame" :{
-                    MakeMuniHigherFrame frame = (MakeMuniHigherFrame)o;
+                //case "class Frames.MakeMuniHigherFrame" :{
+                    //MakeMuniHigherFrame frame = (MakeMuniHigherFrame)o;
+                case "class Scenes.LowMuniScene" :{
+                    LowMuniScene frame = (LowMuniScene)o;
                     cell = row.createCell(0);
                     cell.setCellValue(frame.getCurrentMuni());
 
@@ -55,8 +59,10 @@ public class FixMuniWorkbook extends WorkbookOperations {
                     cell.setCellValue(frame.getUsrNField().getText());
                 }
                 break;
-                case "class Frames.MakeMuniLowerFrame" :{
-                    MakeMuniLowerFrame frame = (MakeMuniLowerFrame)o;
+                //case "class Frames.MakeMuniLowerFrame" :{
+                    //MakeMuniLowerFrame frame = (MakeMuniLowerFrame)o;
+                case "class Scenes.HighMuniScene" :{
+                    HighMuniScene frame = (HighMuniScene)o;
 
                     cell = row.createCell(0);
                     cell.setCellValue(frame.getCurrentMuni());
