@@ -9,10 +9,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Калькулятор исправления усреднителя ДССК");
-        primaryStage.setWidth(1400);
-        primaryStage.setHeight(500);
+        primaryStage.setWidth(1600);
+        primaryStage.setHeight(800);
         primaryStage.setScene(new MainScene(primaryStage).getMainScene());
-        //primaryStage.setScene(new LowMuniScene("45", "50", primaryStage).getLowMuniScene());
+        //primaryStage.setScene(new MainRDSN(primaryStage).getMainScene());
         primaryStage.show();
     }
 

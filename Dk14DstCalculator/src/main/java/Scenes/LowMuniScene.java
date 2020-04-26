@@ -15,6 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -23,10 +25,7 @@ import java.sql.SQLException;
 public class LowMuniScene {
     private Scene lowMuniScene;
     private TextField inputMuniField, inputTargetMuniField, currentLField, muniBatareiField, masloField, usrNField, suhoyOstBatField, roBatField, suhoyOstUsrField, roUsrField;
-    private Label newMuniLabel;
-    private Label newMasloLabel;
-
-    private Label addPolimer;
+    private Label newMuniLabel,  newMasloLabel, addPolimer;
     private double currentMuni, currentL, muniBatarei, maslo, newMuni, newMaslo, result, polimer, targetMuni, suhoyOstBat, roBat, suhoyOstUsr, roUsr;
 
     public LowMuniScene getSceneState(){return this;}
@@ -43,12 +42,23 @@ public class LowMuniScene {
         usrNField = new TextField("");
         newMuniLabel = new Label("");
         newMasloLabel = new Label("");
+        newMasloLabel.setFont(new Font("Arial", 24));
+
         addPolimer = new Label("");
         suhoyOstBatField = new TextField("");
         roBatField =  new TextField("");
         suhoyOstUsrField = new TextField("");
-        roUsrField =  new TextField("");
+        roUsrField =  new TextField("0.77");
+
         Button inputMuniButton = new Button("Далее");
+        inputMuniButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (Double.parseDouble(inputMuniField.getText()) < Double.parseDouble(inputTargetMuniField.getText()))
+                    stage.setScene(new LowMuniScene(inputMuniField.getText(), inputTargetMuniField.getText(), stage).getLowMuniScene());
+                else stage.setScene(new HighMuniScene(inputMuniField.getText(), inputTargetMuniField.getText(), stage).getHighMuniScene());
+            }
+        });
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10, 10, 10, 10));
         vbox.setSpacing(10);
@@ -61,21 +71,21 @@ public class LowMuniScene {
         grid.add(new Label("Дозировка масла, %"), 2, 0);
         grid.add(new Label("№ усреднителя"), 3, 0);
         grid.add(new Label("Сухой остаток на батарее, %"), 4, 0);
-        grid.add(new Label("Плотность на батарее, г/мл"), 5, 0);
-        grid.add(new Label("Сухой остаток в усреднителе, %"), 6, 0);
-        grid.add(new Label("Плотность в усреднителе, г/мл"), 7, 0);
+        //grid.add(new Label("Плотность на батарее, г/мл"), 5, 0);
+        grid.add(new Label("Сухой остаток в усреднителе, %"), 5, 0);
+        grid.add(new Label("Плотность в усреднителе, г/мл"), 6, 0);
         //grid.add(new Label("Муни после исправления"), 8, 0);
-        grid.add(new Label("Маслонаполнение после исправления"), 8, 0);
+        grid.add(new Label("Маслонаполнение после исправления"), 7, 0);
         grid.add(currentLField, 0, 1);
         grid.add(muniBatareiField, 1, 1);
         grid.add(masloField, 2, 1);
         grid.add(usrNField, 3, 1);
         grid.add(suhoyOstBatField, 4, 1);
-        grid.add(roBatField, 5, 1);
-        grid.add(suhoyOstUsrField, 6, 1);
-        grid.add(roUsrField, 7, 1);
+        //grid.add(roBatField, 5, 1);
+        grid.add(suhoyOstUsrField, 5, 1);
+        grid.add(roUsrField, 6, 1);
         //grid.add(newMuniLabel, 8, 1);
-        grid.add(newMasloLabel, 8, 1);
+        grid.add(newMasloLabel, 7, 1);
 
         HBox bbox = new HBox();
         bbox.setPadding(new Insets(10, 10, 10, 0));
@@ -85,18 +95,20 @@ public class LowMuniScene {
             @Override
             public void handle(ActionEvent event) {
                 if(usrNField.getText().length() < 1){ JOptionPane.showMessageDialog(null, " Введите № усреднителя"); return;}
+                newMasloLabel.setTextFill(Color.BLACK);
                 currentL = Double.parseDouble(currentLField.getText().replace(',', '.'));
                 //polimer = Double.parseDouble(polimerLabel.getText());
                 muniBatarei = Double.parseDouble(muniBatareiField.getText().replace(',', '.'));
                 maslo = Double.parseDouble(masloField.getText().replace(',', '.'));
                 suhoyOstBat = Double.parseDouble(suhoyOstBatField.getText().replace(',', '.'));
-                roBat = Double.parseDouble(roBatField.getText().replace(',', '.'));
+                //roBat = Double.parseDouble(roBatField.getText().replace(',', '.'));
                 suhoyOstUsr = Double.parseDouble(suhoyOstUsrField.getText().replace(',', '.'));
-                roUsr = Double.parseDouble(roUsrField.getText().replace(',', '.'));
+                roBat = roUsr = Double.parseDouble(roUsrField.getText().replace(',', '.'));
 
                 result = new FixLowMuni().calculate(getSceneState());
                 setNewMaslo(result);
                 addPolimer.setText(String.valueOf(polimer));
+                if(newMaslo < 25.8) newMasloLabel.setTextFill(Color.RED);
                 newMasloLabel.setText(String.format("%.2f", newMaslo));
                 //newMuniLabel.setText("Расчетное Муни: " + String.format("%.2f", newMuni));
                 newMuniLabel.setText(targetMuni);

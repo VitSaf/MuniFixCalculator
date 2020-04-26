@@ -19,7 +19,7 @@ public class FixHighMuni extends Calculations {
         double H23 = (scene.getMuniBatarei() - scene.getCurrentMuni())/ scene.getMaslo();
         double addMaslo = I23/H23*G23;//H18
 
-        scene.setAddMaslo(addMaslo);
+        scene.setAddMaslo(addMaslo * 1000);
 
         return (V*scene.getRoUsr()*scene.getSuhoyOstUsr()/100*scene.getMaslo()/100+addMaslo)/(V*scene.getSuhoyOstUsr()/100*scene.getRoUsr()+addMaslo)*100;
     }

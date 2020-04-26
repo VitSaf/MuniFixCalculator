@@ -16,6 +16,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -39,14 +41,23 @@ public class HighMuniScene {
         suhoyOstBatField = new TextField("");
         roBatField = new TextField("");
         suhoyOstUsrField = new TextField("");
-        roUsrField = new TextField("");
+        roUsrField = new TextField("0.77");
         muniBatareiField = new TextField("");
         masloField = new TextField("");
         usrNField = new TextField("");
         newMuniLabel = new Label("");
         newMasloLabel = new Label("");
         resultLabel = new Label("");
+        newMasloLabel.setFont(new Font("Arial", 24));
         Button inputMuniButton = new Button("Далее");
+        inputMuniButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (Double.parseDouble(inputMuniField.getText()) < Double.parseDouble(inputTargetMuniField.getText()))
+                    stage.setScene(new LowMuniScene(inputMuniField.getText(), inputTargetMuniField.getText(), stage).getLowMuniScene());
+                else stage.setScene(new HighMuniScene(inputMuniField.getText(), inputTargetMuniField.getText(), stage).getHighMuniScene());
+            }
+        });
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10, 10, 10, 10));
         vbox.setSpacing(10);
@@ -83,6 +94,7 @@ public class HighMuniScene {
             @Override
             public void handle(ActionEvent event) {
                 if(usrNField.getText().length() < 1){ JOptionPane.showMessageDialog(null, "Введите № усреднителя"); return;}
+                newMasloLabel.setTextFill(Color.BLACK);
                 try {
                     factMuni = currentMuni;
                     muniBatarei =  Double.parseDouble(muniBatareiField.getText().replace(',', '.'));
@@ -95,8 +107,9 @@ public class HighMuniScene {
 
                     //addMaslo = new HighMuniCalculations().calculate(getSceneState());
                     newMaslo = new FixHighMuni().calculate(getSceneState());
-                    resultLabel.setText("Добавить " + String.format("%.2f", addMaslo) + "т. масла");
-                    newMasloLabel.setText("Расчетное маслонаполнение: " + String.format("%.2f", newMaslo));
+                    if (newMaslo > 28.8) newMasloLabel.setTextFill(Color.RED);
+                    resultLabel.setText("Добавить " + String.format("%.2f", addMaslo) + "кг масла");
+                    newMasloLabel.setText(String.format("%.2f", newMaslo));
                     newMuniLabel.setText("Расчетное Муни: " + String.format("%.2f", newMuni));
 
                     DbOperations.insert(DbOperations.getConnection(), new Record((float)currentMuni, (float)newMuni, (float)muniBatarei, (float)maslo, (float)newMaslo,
